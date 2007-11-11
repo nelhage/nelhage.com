@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for SwingSet2 Demo Application -->
+<jnlp
+  spec="1.5+"
+  codebase="http://lunatique.mit.edu/~nelhage/antichess"
+  href="antichess.jnlp">
+  <information>
+    <title>Antichess</title>
+    <vendor>The Nihilists</vendor>
+    <!-- <homepage href="docs/help.html"/> -->
+    <description>se44 Antichess Preliminary Release</description>
+
+    <description kind="short">6.170 team 44 (``The Nihilists'')
+    preliminary release antichess system.
+    </description>
+    
+    <!--<icon href="images/swingset2.jpg"/>
+    <icon kind="splash" href="images/splash.gif"/>-->
+    <offline-allowed/> 
+  </information>
+  <!-- <information os="linux">   
+    <title> SwingSet2 Demo on Linux </title>
+    <homepage href="docs/linuxhelp.html" />
+  </information> -->
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.4.2+" java-vm-args="-esa -Xnoclassgc"/>
+    <jar href="antichess.jar"/>
+  </resources>
+  <application-desc main-class="antichess.ControllerMaster" /> 
+</jnlp> 
+

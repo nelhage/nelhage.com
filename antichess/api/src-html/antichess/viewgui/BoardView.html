@@ -1,0 +1,113 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    <a name="line.1"></a>
+<FONT color="green">002</FONT>    package antichess.viewgui;<a name="line.2"></a>
+<FONT color="green">003</FONT>    <a name="line.3"></a>
+<FONT color="green">004</FONT>    import antichess.HumanPlayer;<a name="line.4"></a>
+<FONT color="green">005</FONT>    <a name="line.5"></a>
+<FONT color="green">006</FONT>    /**<a name="line.6"></a>
+<FONT color="green">007</FONT>     * BoardView is a container for rendering Boards and accept input.<a name="line.7"></a>
+<FONT color="green">008</FONT>     * It is an abstract class that is meant to be subclassed by classes<a name="line.8"></a>
+<FONT color="green">009</FONT>     * that are meant to render specific types of Boards.<a name="line.9"></a>
+<FONT color="green">010</FONT>     * <a name="line.10"></a>
+<FONT color="green">011</FONT>     * @author nlharr<a name="line.11"></a>
+<FONT color="green">012</FONT>     * @specfield acceptingInput    //boolean that stores whether the BoardView is accepting input<a name="line.12"></a>
+<FONT color="green">013</FONT>     *                                                              //boardPlayer.setView(args) can only be called by this BoardView<a name="line.13"></a>
+<FONT color="green">014</FONT>     *                                                              //when acceptingInput == true<a name="line.14"></a>
+<FONT color="green">015</FONT>     * <a name="line.15"></a>
+<FONT color="green">016</FONT>     * @specfield boardPlayer               //the HumanPlayer that is requesting inputr from the BoardView<a name="line.16"></a>
+<FONT color="green">017</FONT>     * @specfield viewedBoard               //the board that this BoardView is displaying<a name="line.17"></a>
+<FONT color="green">018</FONT>     */<a name="line.18"></a>
+<FONT color="green">019</FONT>    <a name="line.19"></a>
+<FONT color="green">020</FONT>    public interface BoardView{<a name="line.20"></a>
+<FONT color="green">021</FONT>            <a name="line.21"></a>
+<FONT color="green">022</FONT>            <a name="line.22"></a>
+<FONT color="green">023</FONT>            /**<a name="line.23"></a>
+<FONT color="green">024</FONT>             * Sets the BoardView to accept input from the humanPlayer<a name="line.24"></a>
+<FONT color="green">025</FONT>             * If the BoardView is already accepting input this call does nothing<a name="line.25"></a>
+<FONT color="green">026</FONT>             * @modifies acceptingInput, boardPlayer<a name="line.26"></a>
+<FONT color="green">027</FONT>             * @effects acceptingInput = true, boardPlayer = humanPlayer<a name="line.27"></a>
+<FONT color="green">028</FONT>             */<a name="line.28"></a>
+<FONT color="green">029</FONT>            public void setAcceptingInput(HumanPlayer humanPlayer);<a name="line.29"></a>
+<FONT color="green">030</FONT>            <a name="line.30"></a>
+<FONT color="green">031</FONT>            /**<a name="line.31"></a>
+<FONT color="green">032</FONT>             * Sets the BoardView to not accept input from the humanPlayer<a name="line.32"></a>
+<FONT color="green">033</FONT>             * If the BoardView is already not accepting input this call does nothing<a name="line.33"></a>
+<FONT color="green">034</FONT>             * @modifies acceptingInput<a name="line.34"></a>
+<FONT color="green">035</FONT>             * @effects acceptingInput = false<a name="line.35"></a>
+<FONT color="green">036</FONT>             */<a name="line.36"></a>
+<FONT color="green">037</FONT>            public void setNotAcceptingInput();<a name="line.37"></a>
+<FONT color="green">038</FONT>            <a name="line.38"></a>
+<FONT color="green">039</FONT>            <a name="line.39"></a>
+<FONT color="green">040</FONT>            /**<a name="line.40"></a>
+<FONT color="green">041</FONT>             * Notifies the BoardView that the board has changed<a name="line.41"></a>
+<FONT color="green">042</FONT>             *<a name="line.42"></a>
+<FONT color="green">043</FONT>             */<a name="line.43"></a>
+<FONT color="green">044</FONT>            public void postRefresh();<a name="line.44"></a>
+<FONT color="green">045</FONT>            <a name="line.45"></a>
+<FONT color="green">046</FONT>    <a name="line.46"></a>
+<FONT color="green">047</FONT>    }<a name="line.47"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

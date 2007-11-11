@@ -1,0 +1,23 @@
+*** Running the exploits ***
+
+You'll need to disable address-space randomization in order to get
+hackit.pl or hackit-noexec.pl to work. On Linux, you can do this with
+
+$ echo 0 > /proc/sys/kernel/randomize_va_space
+
+as root.
+
+If you're using gcc 4.1 or newer, you'll need to build with
+-fno-stack-protector to disable stack protection. You may also need -z
+execstack for hackit.pl to work.
+
+The `system' address is pre-computed for my libc and kernel; You'll
+need to recalculate it using gdb as explained in the slides in order
+to get hackit-noexec or hackit-aslr to work.
+
+The stack offsets used here work on my machine. I would expect them to
+work on other machines, but since some of the stack space is set up by
+the kernel before program execution, you may need to change them for a
+different kernel.
+
+Enjoy!

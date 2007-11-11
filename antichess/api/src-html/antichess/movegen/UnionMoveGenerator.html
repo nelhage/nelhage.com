@@ -1,0 +1,104 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    // -*- mode: java; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-<a name="line.1"></a>
+<FONT color="green">002</FONT>    <a name="line.2"></a>
+<FONT color="green">003</FONT>    package antichess.movegen;<a name="line.3"></a>
+<FONT color="green">004</FONT>    <a name="line.4"></a>
+<FONT color="green">005</FONT>    import antichess.*;<a name="line.5"></a>
+<FONT color="green">006</FONT>    import java.util.*;<a name="line.6"></a>
+<FONT color="green">007</FONT>    <a name="line.7"></a>
+<FONT color="green">008</FONT>    /**<a name="line.8"></a>
+<FONT color="green">009</FONT>     * A UnionMoveGenerator is a move generator that unions the moves<a name="line.9"></a>
+<FONT color="green">010</FONT>     * produced by two MoveGenerators<a name="line.10"></a>
+<FONT color="green">011</FONT>     * <a name="line.11"></a>
+<FONT color="green">012</FONT>     **/<a name="line.12"></a>
+<FONT color="green">013</FONT>    public class UnionMoveGenerator&lt;M extends Move&gt; implements MoveGenerator&lt;M&gt;<a name="line.13"></a>
+<FONT color="green">014</FONT>    {<a name="line.14"></a>
+<FONT color="green">015</FONT>        private MoveGenerator&lt;M&gt; move1;<a name="line.15"></a>
+<FONT color="green">016</FONT>            private MoveGenerator&lt;M&gt; move2;<a name="line.16"></a>
+<FONT color="green">017</FONT>    <a name="line.17"></a>
+<FONT color="green">018</FONT>            /**<a name="line.18"></a>
+<FONT color="green">019</FONT>             * @effects Construct a MoveGenerator that returns the union of<a name="line.19"></a>
+<FONT color="green">020</FONT>             * the moves of the two generators<a name="line.20"></a>
+<FONT color="green">021</FONT>             */<a name="line.21"></a>
+<FONT color="green">022</FONT>            public UnionMoveGenerator(MoveGenerator&lt;M&gt; m1, MoveGenerator&lt;M&gt; m2) {<a name="line.22"></a>
+<FONT color="green">023</FONT>                    move1 = m1;<a name="line.23"></a>
+<FONT color="green">024</FONT>                    move2 = m2;<a name="line.24"></a>
+<FONT color="green">025</FONT>            }<a name="line.25"></a>
+<FONT color="green">026</FONT>    <a name="line.26"></a>
+<FONT color="green">027</FONT>            public List&lt;M&gt; getMoves(Piece piece, Board&lt;M&gt; board) {<a name="line.27"></a>
+<FONT color="green">028</FONT>                    List&lt;M&gt; moves = move1.getMoves(piece, board);<a name="line.28"></a>
+<FONT color="green">029</FONT>                    moves.addAll(move2.getMoves(piece, board));<a name="line.29"></a>
+<FONT color="green">030</FONT>                    return moves;<a name="line.30"></a>
+<FONT color="green">031</FONT>            }<a name="line.31"></a>
+<FONT color="green">032</FONT>    <a name="line.32"></a>
+<FONT color="green">033</FONT>            public boolean isMoveLegal(M move, Board&lt;M&gt; board) {<a name="line.33"></a>
+<FONT color="green">034</FONT>                    return move1.isMoveLegal(move, board)<a name="line.34"></a>
+<FONT color="green">035</FONT>                            || move2.isMoveLegal(move, board);<a name="line.35"></a>
+<FONT color="green">036</FONT>            }<a name="line.36"></a>
+<FONT color="green">037</FONT>    <a name="line.37"></a>
+<FONT color="green">038</FONT>    }<a name="line.38"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

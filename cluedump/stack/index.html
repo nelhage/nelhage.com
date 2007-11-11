@@ -1,0 +1,101 @@
+<html>
+  <head><title>Exploiting Software: How to 0wn the Internet In Your
+      Free Time</title>
+  <link rel="stylesheet" type="text/css" href="/static/common.css" />
+  <style type="text/css">
+
+    #readme {
+        color: red;
+        font-size: 120%;
+        width: 100%;
+        text-align: center;
+    }
+
+    .update {
+        color: blue;
+        font-size: 110%;
+        width: 100%;
+        text-align: center;
+    }
+  </style>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Exploiting Software: How to 0wn the Internet In Your
+        Free Time</h1>
+    </div>
+
+    <div id="content">
+    <p>This is a website for my SIPB cluedump of Monday, November
+    5. You can see an abstract on
+    the <a href="http://cluedumps.mit.edu/wiki/2007/11-05">cluedumps
+    schedule</a></p>
+    
+    <h2>Materials</h2>
+    <ul>
+      <li><a href="stack.tgz">Source files and code</a></li>
+      <li><a href="stack.pdf">Slides</a></li>
+    </ul>
+
+    <a name="hackme" />
+    <h2> Cluedump Challenge </h2>
+
+    <div class="update"><p>Update: The first challenger has cracked
+    <tt>HACKME</tt>. His writeup is <a href="#spoilers">below.</a> </p>
+    <p><tt>hackme.mit.edu</tt> will remain up for further attempts.</p></div>
+
+    <p>There is a vulnerable echo daemon running
+    on <tt>hackme.mit.edu</tt> port <tt>20037</tt>.</p>
+
+    <ul>
+      <li><a href="echod.c">echod.c</a></li>
+      <li><a href="echod">echod</a> -- the actual binary running
+      on <tt>hackme</tt></li>
+    </ul>
+
+    <p>The box is running Debian sid with a
+    Linux <tt>2.6.18-3-xen</tt> kernel (It's a Xen paravirtual
+    guest). Address-space layout randomization is enabled, but not
+    noexec stacks or gcc's <tt>-fstack-protector</tt></p>
+
+    <a name="challenge" />
+    <h3> The challenge </h3>
+
+    <div id="readme">Please <a href="hackme.html">READ ME</a> before
+    attempting the challenge</div>
+
+    <p>Compromise <tt>hackme.mit.edu</tt> and send me the contents of
+    the <tt>/cookie</tt> file, via email
+    to <a href="mailto:nelhage@mit.edu">nelhage@mit.edu</a>.</p>
+
+    <a name="prize" />
+    <h3> The prize </h3>
+
+    <!-- <p>
+    <b>If you're a SIPB member or prospective</b>, I'll donate $20 to
+    the W. Sebastian Daher Juice Endowment in your name.
+    </p>
+
+    <p>
+      <b>Otherwise</b>, I'll give you a beverage or candy bar of your
+      choice from Verde's
+    </p> -->
+
+    <p>Now that <tt>hackme.mit.edu</tt> has successfully been cracked,
+      the prize has been claimed and is no longer up for grabs. The
+      server will remain up for some though, however, if anyone else
+      wants to give it a go. </p>
+
+    <a name="spoilers" />
+    <h3> Spoilers / writeups </h3>
+    <ul>
+       <li>My own <a href="soln.html">solution</a></li>
+
+       <li>Evan Jones was the first to send
+       me <tt>/cookie</tt>. His <a
+       href="http://evanjones.ca/hacking-echod.html">writeup</a> is
+       online.</li>
+    </ul>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,365 @@
+<html>
+  <head>
+	<title>Antichess User Manual</title>
+  </head>
+
+  <body>
+<div id="header">
+<h1>Antichess</h1></div>
+
+<span class="title"><h2>User Manual</h2></span>
+
+<p>Contents:</p>
+
+    <ul>
+      <li><a href="#Rules">Antichess Rules</a></li>
+      <li><a href="#TextUI">TextUI</a></li>
+      <li><a href="#GraphicUI">GraphicUI</a>
+    </ul>
+
+
+<h2><a name="Rules"></a>Rules</h2>
+
+<p>Antichess is most easily explained if one already knows the rules to chess.
+If you are unfamiliar with how pieces move or how chess is played, you should visit: 
+<a  href="http://en.wikipedia.org/wiki/Chess#Rules"> http://en.wikipedia.org/wiki/Chess#Rules </a>
+or perhaps 
+<a  href="http://www.princeton.edu/~jedwards/cif/chess.html"> http://www.princeton.edu/~jedwards/cif/chess.html </a>
+and read up on the rules.  Chess is a lot of fun and learning the rules will prevent you ever from needing to explain to people why you don't know the rules.</p>
+
+
+<p>There are many versions of Antichess with a large variety of rule sets.  The following rules are the rules that the program follows. All of the pieces move the same is in
+normal chess (this includes castling and en passant).  If pawns advance to the other side they automatically become queens.  There is no selection process.If a piece in Antichess can take 
+another piece, it must.  If there are multiple legal moves available to a player that
+result in a capture, any are acceptable.</p>
+
+
+<p>The forced capture rule does not strictly hold if a player's king is in check.  If player A's
+it's player A's turn then these are the rules he must follow:</p>
+<ol>
+<li>If A's king is under check, A must move the king out of
+check.</li>
+
+<li>A cannot move in a way that causes the king to come into
+check.</li>
+
+<li>If A can take one of B's pieces, then it must (unless
+disallowed by the previous rule).</li>
+
+<li>If A's king is under check and A can move in such a way that
+the king is out of check by either taking B's piece or in some
+other manner, A must take B's piece.</li>
+</ol>
+<p>  
+Getting the king out of check overrides the rule of being forced to capture.  If a capture is
+available while getting out of check that is forced.</p>
+<p>
+Players can either be untimed or timed.  If a player is timed then he starts the game with a timer
+having a certain amount of time on it, 4 minutes let's say.  Whenever it is this players turn the timer
+is counting down.  If it reaches zero the player has lost. </p>
+
+<p>Player A wins the game against player B if:</p>
+
+<ol>
+<li>all pieces of A except for the king are taken, or</li>
+
+<li>player A checkmates player B, or</li>
+
+<li>player B's timer runs to 0.</li>
+</ol>
+
+<p>If player A checkmates player B and on the same turn takes the last
+of player B's non-king pieces, player A wins (ie, the checkmate
+prevails).</p>
+
+<p>If a player cannot make a legal move and none of the end conditions have been met for the 
+game that players turn is skipped</p>
+
+<p>For a slightly less terse explanation of the Antichess rules feel free to visit <a  href="http://www.mit.edu/~6.170/assignments/antichess/antichess.html#antichess_rules">  http://www.mit.edu/~6.170/assignments/antichess/antichess.html#antichess_rules.</a></p>
+
+
+<h1><a name="TextUI"></a>TextUI</h1>
+	<p>Largely borrowed from the
+ 	<a  href="http://www.mit.edu/~6.170/api/index.html">provided specifications</a>
+	</p>
+
+<p>
+The TextUI supports one flag when calling it from the console.  If it is called with '-s' the command
+ShowBoard is enabled.
+</p>
+All of the time while executing the TextUI is spent in the interactive loop.  
+After running the program you should be greeted with an empty line that you can input commands into.  The supported commands for the TextUI are:</p>
+
+
+<ul>
+          <li><a href="#StartNewGame">StartNewGame</a></li>
+          <li><a href="#SaveGame">SaveGame</a></li>
+          <li><a href="#LoadGame">LoadGame</a></li>
+          <li><a href="#GetNextMove">GetNextMove</a></li>
+          <li><a href="#MakeNextMove">MakeNextMove</a></li>
+	  <li><a href="#MakeMove">MakeMove</a></li>
+          <li><a href="#PrintBoard">PrintBoard</a></li>
+          <li><a href="#IsLegalMove">IsLegalMove</a></li>
+          <li><a href="#PrintAllMoves">PrintAllMoves</a></li>
+          <li><a href="#GetTime">GetTime</a></li>
+	  <li><a href="#ShowBoard">ShowBoard</a></li>
+	  <li><a href="#QuitGame">QuitGame</a></li>
+	
+</ul>
+	
+
+<h3><a name="StartNewGame"></a>StartNewGame</h3>
+	<p>Format: <b>StartNewGame</b> [player]  [time]  [player]  [time]</p>
+	<ul>
+		<li> <b>[player]</b>  can be 'human' or 'computer' any other inputs will 
+				result in an error.</li>
+		<li> <b>[time]</b>  can be any positive or zero value </li>
+	</ul>
+<p>
+Each player is denoted as "human" or "computer." The times specified are the initial "time remaining" for the player, in milliseconds. If a time argument is zero, then the playing time is unlimited. The first player is white and the second player is black. For example, StartNewGame computer 60000 human 180000 should start a new game with the computer playing as white and the human playing as black. The computer will have 1 minute to make all of its moves, and the human will have 3 minutes. The system will output New game started on its own line.
+</p>
+
+
+
+<h3><a name="SaveGame"></a>SaveGame</h3>
+	<p>Format: <b>SaveGame</b> [filename]</p>
+	<ul>
+		<li> <b>[filename]</b>  cannot be an empty string.  It is a filename so 
+				restrictions for filenames of the users operating system 
+				apply.  Note that the file will be overwritten so don't 
+				accidentally destroy needed files.</li>
+	</ul>
+<p>
+The system will save the game to the given filename and report 'Game saved' on its own line.  If one
+player is untimed and one player is timed the game is saved as if both players were untimed.
+</p>
+
+
+
+
+<h3><a name="LoadGame"></a>LoadGame</h3>
+	<p>Format: <b>SaveGame</b> [filename]</p>
+	<ul>
+		<li> <b>[filename]</b>  cannot be an empty string.  It is a filename so 
+				restrictions for filenames of the users operating system 
+				apply.  Note that the file will be overwritten so don't 
+				accidentally destroy needed files.</li>
+	</ul>
+<p>
+The system should load the game from the given filename. Once the files is loaded, it will print 'Game loaded' on its own line. It will report 'Corrupt file' if the file does not have a correct format. The players of the loaded game (computer or human) are determined by the players of the current game.  So if
+right now white is human and black is computer then with the loaded game white will be human and black will be computer controlled.  If no game has been started it will automatically load as a human vs. human game.
+</p>
+
+
+<h3><a name="GetNextMove"></a>GetNextMove</h3>
+	<p>Format: <b>GetNextMove</b></p>
+<p>
+If this command is called during a human player's turn, the command prints 'Human turn' on its own line. If this command is called during a machine player's turn, print on its own line the next move it believes to be the best. The printed move should be in the <a href="#SMF">standard move format</a>  The time taken to compute the move will be subtracted from the computer player's game clock. 
+If called repeatedly, this should return the same move over and over without further 
+decrementing the computer's time remaining.
+</p>
+
+
+<h3><a name="MakeNextMove"></a>MakeNextMove</h3>
+	<p>Format: <b>MakeNextMove</b></p>
+<p>
+If it is a human player's turn, the system should print 'Please specify human move' on its own line. If it is the computer player's turn, and GetNextMove has not yet been called on this turn, then the system should print 'First GetNextMove'. Otherwise, the system performs the move that GetNextMove would return.
+</p>
+
+
+
+
+<h3><a name="MakeMove"></a>MakeMove</h3>
+	<p>Format: <b>MakeMove</b> [move] [time]</p>
+	<ul>
+		<li> <b>[move]</b>  should be in the standard string format</li>
+		<li> <b>[time]</b>  can be any positive or zero value </li>
+	</ul>
+<p>
+Perform the move specified by the move string, in the <a href="#SMF">standard move format.</a> The time parameter is specified in milliseconds. This command should only be used by a Human Player. If it is used during a computer player's turn, nothing will happen to the game state and no response should be printed. If the move is not legal, the system should print, on its own line, 'Illegal move' and not perform the move. If the move is legal, the system will perform the move, decrement the player's time by the amount given, and print the move performed, in proper format, on its own line. If the player's time is unlimited, then the time argument is ignored (but must still be present).
+</p>
+
+
+
+
+<h3><a name="PrintBoard"></a>PrintBoard</h3>
+	<p>Format: <b>PrintBoard</b></p>
+<p>
+System should print the current "state" of the game to the screen using the same format as if it were being saved to a file. The output should end with (at least one) a newline.
+</p>
+
+
+<h3><a name="IsLegalMove "></aIsLegalMove </h3>
+	<p>Format: <b>LegalMove</b> [move]</p>
+	<ul>
+		<li> <b>[move]</b>  should be in the <a href="#SMF">standard move format.</a></li>
+	</ul>
+<p>
+System will print, on its own line, either "legal" or "illegal" to specify if the move is a legal next move.
+</p>
+
+
+<h3><a name="PrintAllMoves"></a>PrintAllMoves</h3>
+	<p>Format: <b>PrintAllMoves</b></p>
+<p>
+System will, in alphanumeric order, print all legal moves for the next player. Each move should each appear on its own line.
+</p>
+
+
+[player]
+    On its own line, the system should print the time remaining in milliseconds for the player specified. For example GetTime white, should print 3000 to indicate 3 seconds left for the white player. If the time for the player is unlimited, the system should print "unlimited".
+
+
+<h3><a name="GetTime"></a>GetTime</h3>
+	<p>Format: <b>GetTime</b> [player]</p>
+	<ul>
+		<li> <b>[player]</b>  can be 'human' or 'computer'</li>
+	</ul>
+<p>
+On its own line, the system should print the time remaining in milliseconds for the player specified. For example GetTime white, should print 3000 to indicate 3 seconds left for the white player. If the time for the player is unlimited, the system will print "unlimited".
+</p>
+
+
+
+<h3><a name="ShowBoard"></a>ShowBoard</h3>
+	<p>Format: <b>ShowBoard</b></p>
+<p>
+The system will print off a ascii art representation of the board. <i>Note that this is only available
+if TextUI is called with the '-s' flag.</i>
+</p>
+
+
+
+<h3><a name="QuitGame"></a>QuitGame</h3>
+	<p>Format: <b>QuitGame</b></p>
+<p>
+Prints (on its own line) Exiting game and terminates the present game and application.
+</p>
+
+
+<p>
+GetNextMove may take no more than ten seconds more than the player's time remaining to complete; if it exceeds the player's time remaining it must report a human victory.
+When a player has won the game, output on its own line: [Player color] Player has won. For example, if the black player has won, output: Black Player has won. At this point, only the beginning subset of commands will be available though QuitGame will also be available.
+</p>
+
+<p>
+If the user input does not match one of these commands, output Input error alone on one line. Also, the first valid command entered must be either StartNewGame or LoadGame, or else Input error is printed.
+</p>
+
+
+<h2><a name="SMF"></a>Standard Move Format</h2>
+<p>We define a <a id="standard-string-format" name="standard-string-format">standard string format for a chess move</a>. The string
+should be 5 characters long. The first two characters represent the
+square where the piece began, the third character is a dash (-),
+and the next two characters represent the square where the piece
+moved to.</p>
+
+<pre>
+
+&lt;move-desc&gt; ::= &lt;position&gt;-&lt;position&gt;
+&lt;position&gt; ::= &lt;col&gt;&lt;row&gt;
+&lt;col&gt; ::= a | b | c | d | e | f | g | h
+&lt;row&gt; ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+</pre>
+
+<p>So a move would be structured in the format e2-e4.  Which as an opening move would advance 
+the white pawn above the king.  The rows and columns are arranged like this:</p>
+<img src="./documentationimages/plainboard.gif" width="400" height="400" />
+
+
+
+
+
+
+
+<h1><a name="GraphicUI"></a>GraphicUI</h1>
+
+<p>There is also a GraphicUI for playing chess or antichess.</p>
+
+	<ul>
+          <li><a href="#newgame">Starting a New Game</a></li>
+          <li><a href="#playing">Playing a Game</a></li>
+	  <li><a href="#Making Moves">Making Moves</a></li>
+	  <li><a href="End of Game">End of Game</a></li>
+	  <li><a href="Saving">Saving</a></li>
+	  <li><a href="Loading">Loading</a></li>
+          <li><a href="#options">Options</a></li>
+
+        </ul>
+
+
+
+<h3><a name="newgame">Starting a New Game</a></h3>
+
+<p>
+Antichess will automatically start with a new game
+To start a new game click the Game button on the menu bar and select New Game.  We can also press
+<b>Ctrl-N</b> to open the New Game window.  A new game window should open up. 
+</p>
+<img src="./documentationimages/newgame.png" width="385" height="350" />
+
+<p>From this window you can select whether we want white and black computer controller or controlled by a human.  We can also select the times each has for a game. One can also select what type of game we want to play.  Chess follows typical Chess Rules. Antichess follows the Antichess rules described above.
+Once we are happy with the selection press New Game.  If we decide we do not want to start a new game press cancel. If it is a timed game the timer will start running so be ready.</p>
+
+
+
+
+
+<h3><a name="playing">Playing a Game</a></h3>
+
+<p>
+When starting Antichess, we should be greeted with a screen that looks like this:
+</p>
+<img src="./documentationimages/startedgame.png" width="830" height="579" />
+<p> It will start out as whites turn.  Whose turn it is is indicated by the label
+in the upper righthand corner of the screen.  The larger, underlined, red name is
+the player who can currently make moves.  A move history is displayed on the bottom
+right.  The format for the moves outputed is the <a href="#SMF">standard move format.</a>
+The most recent move is highlighted in red.
+</p>
+
+<h3><a name="Making Moves">Making Moves</h3>
+<p>If it is a humans turn, moves are made by selecting a piece via clicking on it and then click on a destination.  If the move is a legal move for the current game is is performed.  If it is a computer players turn then computer will calculate a legal move and automatically perform it.  When we select a piece the square it is on is highlighted by a dark blue square.  There is an option to highlight in green all the squares that are legal moves for the selected piece.  That option is on by default.  We can only select pieces if it is taht players turn and that player is controlled by a human.  The following screen is what it looks like after a white queen is selected:
+</p>
+<img src="./documentationimages/selectedpiece.png" width="477" height="465" />
+
+<p>In Antichess many pieces often do not have any legal moves because one piece is forced to take another piece.  Also because the movement of pieces happen instantly we have the ability to highlight the pieces that have legal moves and to highlight the beginning and end squares from the previous move.  To activate these hold down the spacebar.  The last move is highlighted in orange.  The pieces with available moves are highlighted in green.  These are only highlighted while the <i>spacebar</i> is pressed.</p>
+
+<img src="./documentationimages/highlight.png" width="468" height="495" />
+  
+<h3><a name="End of Game">End of Game</h3>
+<p>If end conditions are met for the current game (these are different for chess and antichess and are either described in the rules above in the case of antichess or on the internet in the case of chess) a window pops up stating who won and the chessboard now displays text stating the winner of the game. We can end the game early by selecting game in the window in the menu bar and then pressing end game. </p>
+
+<img src="./documentationimages/endgame.png" width="585" height="540" />
+
+
+<h3><a name="Saving">Saving the Game</h3>
+<p>In the middle of an Antichess game we can save the game to a file on the harddrive.  To do this select Game on the menu bar and then select save game.  Then simply select a file. </p>
+ 
+
+<h3><a name="Loading">Loading the Game</h3>
+<p>We can load a game at any time.  To do this simply select Game and then select Load new Game.  Select the file we wish to load.  It then will bring up a menu where we can select whether we want white and black controlled by humans or the computer.  When we are happy with the selection we hit load game and the new game should be loaded.  If the file is corrupt or is not a proper save file the game that was running when attempting to load will continue to play. Note that saving and loading are only available if we are currently playing Antichess.  If we try to save a game while playing chess it will do nothing.  If we try to load a game while playing chess, the game started will be Antichess.</p
+
+
+<h3><a name="Options">Options</h3>
+<p>Here is a picure of the Options menu:</p>
+
+<img src="./documentationimages/optionsmenu.png" width="302" height="244" />
+
+<ol>
+<li><b>Pause Game</b> naturally pauses the game.  A game is unpaused after it is created.  When exiting from saving or loading, whether they are successful or not the game is unpaused. </li>
+<li><b>Show Possible Moves</b> sets whether after selecting a piece, whether 	all the destination squares are highlighted.  It is turned on by default.</li>
+<li><b>Disco</b> is a special mode where colors flash at us</li>
+</ol>
+
+<p>If you ever feel sad, hold 'H' </p>
+
+
+<div id="footer">
+<p>For questions or problems regarding this manual or use contact: <a
+href="mailto:ze-nihilists@mit.edu">ze-nihilists@mit.edu</a>.</p>
+
+</div>
+</body>
+</html>
+

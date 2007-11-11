@@ -1,0 +1,131 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    // -*- mode: java; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-<a name="line.1"></a>
+<FONT color="green">002</FONT>    <a name="line.2"></a>
+<FONT color="green">003</FONT>    package antichess.movegen;<a name="line.3"></a>
+<FONT color="green">004</FONT>    <a name="line.4"></a>
+<FONT color="green">005</FONT>    import antichess.*;<a name="line.5"></a>
+<FONT color="green">006</FONT>    import java.util.*;<a name="line.6"></a>
+<FONT color="green">007</FONT>    <a name="line.7"></a>
+<FONT color="green">008</FONT>    /**<a name="line.8"></a>
+<FONT color="green">009</FONT>     * ChessMoveGenerator is an abstract implementation of MoveGenerator<a name="line.9"></a>
+<FONT color="green">010</FONT>     * for generating ChessMoves. <a name="line.10"></a>
+<FONT color="green">011</FONT>     **/<a name="line.11"></a>
+<FONT color="green">012</FONT>    public abstract class ChessMoveGenerator implements MoveGenerator&lt;ChessMove&gt;<a name="line.12"></a>
+<FONT color="green">013</FONT>    {<a name="line.13"></a>
+<FONT color="green">014</FONT>        public abstract List&lt;ChessMove&gt; getMoves(Piece piece, Board&lt;ChessMove&gt; board);<a name="line.14"></a>
+<FONT color="green">015</FONT>    <a name="line.15"></a>
+<FONT color="green">016</FONT>            /**<a name="line.16"></a>
+<FONT color="green">017</FONT>             * &lt;p&gt; Ensures that the given move is a &lt;tt&gt;ChessMove&lt;/tt&gt;, that<a name="line.17"></a>
+<FONT color="green">018</FONT>             * its destination coordinates are within the bounds of the Board,<a name="line.18"></a>
+<FONT color="green">019</FONT>             * and that the Piece on the board at the destination square is<a name="line.19"></a>
+<FONT color="green">020</FONT>             * either &lt;tt&gt;null&lt;/tt&gt;, or belongs to the other player than the<a name="line.20"></a>
+<FONT color="green">021</FONT>             * Move's player. In addition, it tests that<a name="line.21"></a>
+<FONT color="green">022</FONT>             * hasCorrectCapturedPiece(move).&lt;/p&gt;<a name="line.22"></a>
+<FONT color="green">023</FONT>             *<a name="line.23"></a>
+<FONT color="green">024</FONT>             * &lt;p&gt; If these conditions are satisfied, it calls<a name="line.24"></a>
+<FONT color="green">025</FONT>             * &lt;tt&gt;isMoveLegal(ChessMove, Board)&lt;/tt&gt;; If not, returns<a name="line.25"></a>
+<FONT color="green">026</FONT>             * false. &lt;/p&gt;<a name="line.26"></a>
+<FONT color="green">027</FONT>             **/<a name="line.27"></a>
+<FONT color="green">028</FONT>            public boolean isMoveLegal(ChessMove move, Board&lt;ChessMove&gt; board){<a name="line.28"></a>
+<FONT color="green">029</FONT>                    if(move.getRow() &lt; 0 || move.getRow() &gt;= board.getRows()<a name="line.29"></a>
+<FONT color="green">030</FONT>                       || move.getColumn() &lt; 0 || move.getColumn() &gt;= board.getColumns())<a name="line.30"></a>
+<FONT color="green">031</FONT>                            return false;<a name="line.31"></a>
+<FONT color="green">032</FONT>                    if(!hasCorrectCapturedPiece(move, board))<a name="line.32"></a>
+<FONT color="green">033</FONT>                            return false;<a name="line.33"></a>
+<FONT color="green">034</FONT>    <a name="line.34"></a>
+<FONT color="green">035</FONT>                    return isChessMoveLegal(move, board);<a name="line.35"></a>
+<FONT color="green">036</FONT>            }<a name="line.36"></a>
+<FONT color="green">037</FONT>    <a name="line.37"></a>
+<FONT color="green">038</FONT>            /**<a name="line.38"></a>
+<FONT color="green">039</FONT>             * @return true if move.capturedPiece is set to a legal value for<a name="line.39"></a>
+<FONT color="green">040</FONT>             * the given move on the given board. By default, this means that<a name="line.40"></a>
+<FONT color="green">041</FONT>             * &lt;tt&gt;move.capturedPiece&lt;/tt&gt; is in fact the piece located at<a name="line.41"></a>
+<FONT color="green">042</FONT>             * (move.row, move.column). Subclasses that can ``capture at a<a name="line.42"></a>
+<FONT color="green">043</FONT>             * distance'' (e.g. pawns with en passant), can override this.<a name="line.43"></a>
+<FONT color="green">044</FONT>             */<a name="line.44"></a>
+<FONT color="green">045</FONT>            protected boolean hasCorrectCapturedPiece(ChessMove move, Board&lt;ChessMove&gt; board) {<a name="line.45"></a>
+<FONT color="green">046</FONT>                    Piece otherPiece = board.getPieceAt(move.getRow(), move.getColumn());<a name="line.46"></a>
+<FONT color="green">047</FONT>                    if(otherPiece != null) {<a name="line.47"></a>
+<FONT color="green">048</FONT>                            if(otherPiece.getPlayer() == move.getPiece().getPlayer()<a name="line.48"></a>
+<FONT color="green">049</FONT>                               || !otherPiece.equals(move.getCapturedPiece()))<a name="line.49"></a>
+<FONT color="green">050</FONT>                                    return false;<a name="line.50"></a>
+<FONT color="green">051</FONT>                    } else if(move.getCapturedPiece() != null) {<a name="line.51"></a>
+<FONT color="green">052</FONT>                            return false;<a name="line.52"></a>
+<FONT color="green">053</FONT>                    }<a name="line.53"></a>
+<FONT color="green">054</FONT>                    return true;<a name="line.54"></a>
+<FONT color="green">055</FONT>            }<a name="line.55"></a>
+<FONT color="green">056</FONT>    <a name="line.56"></a>
+<FONT color="green">057</FONT>            /**<a name="line.57"></a>
+<FONT color="green">058</FONT>             * Check that the given move is legal for this piece type.<a name="line.58"></a>
+<FONT color="green">059</FONT>             * @requires 0 &lt;= move.row &lt; board.rows &amp;&amp; 0 &lt;= move.column &lt;<a name="line.59"></a>
+<FONT color="green">060</FONT>             * board.columns &amp;&amp; board.pieceAt(move.row, move.col) == null ||<a name="line.60"></a>
+<FONT color="green">061</FONT>             * board.pieceAt(move.row, move.col).player != move.piece.player<a name="line.61"></a>
+<FONT color="green">062</FONT>             * &amp;&amp; hasCorrectCapturedPiece(move)<a name="line.62"></a>
+<FONT color="green">063</FONT>             */<a name="line.63"></a>
+<FONT color="green">064</FONT>            protected abstract boolean isChessMoveLegal(ChessMove move, Board&lt;ChessMove&gt; board);<a name="line.64"></a>
+<FONT color="green">065</FONT>    }<a name="line.65"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,124 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    package antichess;<a name="line.1"></a>
+<FONT color="green">002</FONT>    <a name="line.2"></a>
+<FONT color="green">003</FONT>    <a name="line.3"></a>
+<FONT color="green">004</FONT>    /**<a name="line.4"></a>
+<FONT color="green">005</FONT>     * This interface handles interactions between the Controller and the View<a name="line.5"></a>
+<FONT color="green">006</FONT>     * The HumanPlayer facilitates the communication between the GameController and the<a name="line.6"></a>
+<FONT color="green">007</FONT>     * BoardView class.  The typical communication bewtween the classes works in this manner:<a name="line.7"></a>
+<FONT color="green">008</FONT>     * <a name="line.8"></a>
+<FONT color="green">009</FONT>     * controller calls getMove.  The HumanPlayer tells the BoardView to acceptInput.  When the BoardView<a name="line.9"></a>
+<FONT color="green">010</FONT>     * has input it notifies the HumanPlayer.  The HumanPlayer checks for legality in the move.  If the <a name="line.10"></a>
+<FONT color="green">011</FONT>     * move is legal it notifies the controller that it has a move.<a name="line.11"></a>
+<FONT color="green">012</FONT>     * <a name="line.12"></a>
+<FONT color="green">013</FONT>     * <a name="line.13"></a>
+<FONT color="green">014</FONT>     * @author nlharr<a name="line.14"></a>
+<FONT color="green">015</FONT>     * <a name="line.15"></a>
+<FONT color="green">016</FONT>     * @specfield board             //Board stores the board the HumanPlayer is interacting with<a name="line.16"></a>
+<FONT color="green">017</FONT>     * @specfield controller        //controller specifies the GameController that this HumanPlayer is controlled by<a name="line.17"></a>
+<FONT color="green">018</FONT>     * @specfield boardView         //BoardView that the HumanPlayer asks for moves<a name="line.18"></a>
+<FONT color="green">019</FONT>     * @specfield currentMove       //stores the currentMove to be updated to by the GameController<a name="line.19"></a>
+<FONT color="green">020</FONT>     */<a name="line.20"></a>
+<FONT color="green">021</FONT>    public interface HumanPlayer&lt;M extends Move&gt; extends GamePlayer&lt;M&gt;{<a name="line.21"></a>
+<FONT color="green">022</FONT>            <a name="line.22"></a>
+<FONT color="green">023</FONT>            <a name="line.23"></a>
+<FONT color="green">024</FONT>            /**<a name="line.24"></a>
+<FONT color="green">025</FONT>             * <a name="line.25"></a>
+<FONT color="green">026</FONT>             * @return a valid move if the user has inputed one<a name="line.26"></a>
+<FONT color="green">027</FONT>             */<a name="line.27"></a>
+<FONT color="green">028</FONT>            public M getMove(GameController controller);<a name="line.28"></a>
+<FONT color="green">029</FONT>                    <a name="line.29"></a>
+<FONT color="green">030</FONT>            <a name="line.30"></a>
+<FONT color="green">031</FONT>            <a name="line.31"></a>
+<FONT color="green">032</FONT>            /**<a name="line.32"></a>
+<FONT color="green">033</FONT>             * @returns playerType<a name="line.33"></a>
+<FONT color="green">034</FONT>             */<a name="line.34"></a>
+<FONT color="green">035</FONT>            public Player getPlayerType();<a name="line.35"></a>
+<FONT color="green">036</FONT>            <a name="line.36"></a>
+<FONT color="green">037</FONT>            /**<a name="line.37"></a>
+<FONT color="green">038</FONT>             * @requires startRows, startColumns, destinationRows, destinationColumnes are all not null <a name="line.38"></a>
+<FONT color="green">039</FONT>             * @modifies currentMove<a name="line.39"></a>
+<FONT color="green">040</FONT>             * @effects if the move between the start and destination is legal<a name="line.40"></a>
+<FONT color="green">041</FONT>             *                      it sets currentMove to that move<a name="line.41"></a>
+<FONT color="green">042</FONT>             *<a name="line.42"></a>
+<FONT color="green">043</FONT>             * @return true if the move between the start and destination is legal<a name="line.43"></a>
+<FONT color="green">044</FONT>             *                      else false<a name="line.44"></a>
+<FONT color="green">045</FONT>             */<a name="line.45"></a>
+<FONT color="green">046</FONT>            public boolean setMove(int[] startRows, int[] startColumns,<a name="line.46"></a>
+<FONT color="green">047</FONT>                                                                                    int[] destinationRows, int[] destinationColumns);<a name="line.47"></a>
+<FONT color="green">048</FONT>            <a name="line.48"></a>
+<FONT color="green">049</FONT>            /**<a name="line.49"></a>
+<FONT color="green">050</FONT>             * Notifies the controller that requested a move if it has a move<a name="line.50"></a>
+<FONT color="green">051</FONT>             * @throws RuntimeException if no move has been requested so there is<a name="line.51"></a>
+<FONT color="green">052</FONT>             *                      no controller to return a value to<a name="line.52"></a>
+<FONT color="green">053</FONT>             */<a name="line.53"></a>
+<FONT color="green">054</FONT>            public void notifyHasMove();<a name="line.54"></a>
+<FONT color="green">055</FONT>            <a name="line.55"></a>
+<FONT color="green">056</FONT>     <a name="line.56"></a>
+<FONT color="green">057</FONT>            <a name="line.57"></a>
+<FONT color="green">058</FONT>    }<a name="line.58"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

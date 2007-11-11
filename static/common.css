@@ -1,0 +1,22 @@
+#header {
+   padding-bottom: 1em;
+   margin: auto;
+   text-align: center;
+}
+
+h2,h3 {
+   text-align: center;
+   width: 100%;
+}
+
+#content {
+   width: 40em;
+   margin: auto;
+   border: 1px solid black;
+   padding: 5px;
+   background-color: white;
+}
+
+body {
+   background-color: #9999ff;
+}
