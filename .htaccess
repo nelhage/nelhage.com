@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^blog http://blog.nelhage.com/ [R,L]
