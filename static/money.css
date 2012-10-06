@@ -1,0 +1,45 @@
+#amountbox {
+    float: left;
+    height: 40px;
+    padding-right: 5px;
+}
+
+#amount {
+    clear: both;
+    height: 40px;
+    position: relative;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.centerfloat {
+    float: left;
+    height: 50%;
+    margin-bottom: -15px;
+}
+
+#amount input {
+    height: 28px;
+    margin-left: 5px;
+    font-size: 120%;
+}
+
+#status span {
+    display: none;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+#status {
+    clear: both;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.failure {
+    color: red;
+}
+
+.success {
+    color: green;
+}
