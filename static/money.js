@@ -1,11 +1,13 @@
 function error(msg) {
     $('#status .success').hide();
     $('#status .failure').text(msg).show();
+    $('#status').show()
 }
 
 function success(msg) {
     $('#status .failure').hide();
     $('#status .success').text(msg).show();
+    $('#status').show()
 }
 
 function validateAmount() {

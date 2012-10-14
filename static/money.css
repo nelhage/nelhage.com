@@ -12,12 +12,6 @@
     font-weight: bold;
 }
 
-.centerfloat {
-    float: left;
-    height: 50%;
-    margin-bottom: -15px;
-}
-
 #amount input {
     height: 28px;
     margin-left: 5px;
@@ -34,6 +28,7 @@
     clear: both;
     padding-top: 10px;
     padding-left: 10px;
+    display: none;
 }
 
 .failure {
