@@ -1,21 +1,16 @@
 #amountbox {
     float: left;
-    height: 40px;
     padding-right: 5px;
 }
 
 #amount {
     clear: both;
-    height: 40px;
     position: relative;
-    font-size: 120%;
     font-weight: bold;
 }
 
 #amount input {
-    height: 28px;
     margin-left: 5px;
-    font-size: 120%;
 }
 
 #status span {

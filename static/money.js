@@ -33,7 +33,7 @@ function formatAmount(amt) {
     return "$" + (Math.floor(amt/100)) + "." + cents;
 }
 
-function doPayment(e, token) {
+function doPayment(token) {
     var amt = validateAmount();
     if (amt == null) return;
     $.post('/money/ajax/pay',
@@ -53,8 +53,18 @@ function doPayment(e, token) {
 }
 
 $(function() {
-    $('.stripe-button').bind('token', doPayment);
-    $('.stripe-button-inner').click(function() {
-            return !!validateAmount();
+    $('#pay-button').click(function() {
+        var amount = validateAmount();
+        if (!amount)
+            return false;
+        StripeCheckout.open({
+            key:         'pk_live_AdFHzaaRspaGoJ4Hs9IqMp4u',
+            address:     false,
+            amount:      amount,
+            name:        'Nelson Elhage',
+            description: 'Payment to Nelson Elhage',
+            panelLabel:  'Pay',
+            token:       doPayment
+        });
     });
 });
