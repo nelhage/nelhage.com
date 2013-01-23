@@ -1,10 +1,12 @@
+#content span {
+}
+
 #amountbox {
-    float: left;
     padding-right: 5px;
 }
 
 #amount {
-    clear: both;
+    display: inline;
     position: relative;
     font-weight: bold;
 }
