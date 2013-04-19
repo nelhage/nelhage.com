@@ -13,6 +13,7 @@
 
 #amount input {
     margin-left: 5px;
+    width: 4em;
 }
 
 #status span {
@@ -34,4 +35,11 @@
 
 .success {
     color: green;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
