@@ -18,6 +18,16 @@
         width: 100%;
         text-align: center;
     }
+    #about li {
+        display: inline;
+    }
+    #about li:not(:first-child)::before {
+        content: "· ";
+    }
+    #about ul {
+        padding: 0;
+        margin: 5px 0 0 0;
+    }
   </style>
   </head>
   <body>
@@ -26,19 +36,27 @@
     </div>
 
     <div id="content">
-      <p id="about">
-        Nelson Elhage <br />
-        <code>nelhage@nelhage.com</code><br />
-        <a href="http://blog.nelhage.com/">Blog</a><br />
-    </p>
+      <div id="about">
+        <div> Nelson Elhage</div>
+        <ul>
+          <li><a href="mailto:nelhage@nelhage.com">email</a></li>
+          <li><a href="http://blog.nelhage.com/">blog</a></li>
+          <li><a href="https://twitter.com/nelhage">twitter</a></li>
+        </ul>
+      </div>
 
 
     <h2>Work</h2>
 
     <p>
-      At the moment, I'm taking some time off between
-      jobs. Previously, I've worked at:
+      I'm currently an engineer and researcher at <a
+      href="http://anthropic.com/">Anthropic</a>, working on
+      reverse-engineering large language models. You can <a
+      href="https://transformer-circuits.pub/">read my team's
+      papers</a> online.
     </p>
+
+    <p>Previously, I've worked at:</p>
 
     <ul>
       <li>
@@ -74,22 +92,23 @@
 
     <h2>Writing</h2>
     <p>
-      I maintain or contribute to a handful of blogs online. You can
-      find stuff I've written at:
-      <ul>
-        <li><a href="https://blog.nelhage.com/">My primary personal blog</a></li>
-        <li><a
-        href="https://accidentallyquadratic.tumblr.com"><tt>accidentallyquadratic.tumblr.com</tt></a>,
-        where I chronicle real-world cases of code with unintended
-        <em>Θ(n²)</em> complexity with harmful consequences.
-        </li>
-        <li><a
-        href="http://nelhagedebugsshit.tumblr.com/"><tt>nelhagedebugsshit.tumblr.com</tt></a>,
-        where I chronicle interesting shorter stories of things I've
-        debugged or investigated.</li>
-        <li>The <a href="https://stripe.com/blog">Stripe Blog</a></li>
-      </ul>
+      I write at a number of online venues. You can find stuff I've
+      written at:
     </p>
+    <ul>
+      <li><a href="https://blog.nelhage.com/"><tt>blog.nelhage.com</tt>, my
+      personal blog</a></li>
+      <li><a href="https://buttondown.email/nelhage">A
+      newsletter</a>, which gets more experimental or in-progress
+      thought.</li>
+      <li><a href="http://nelhagedebugsshit.tumblr.com/"><tt>nelhagedebugsshit.tumblr.com</tt></a>,
+      where I chronicle interesting shorter stories of things I've
+      debugged or investigated.</li>
+      <li><a href="https://accidentallyquadratic.tumblr.com"><tt>accidentallyquadratic.tumblr.com</tt></a>,
+      where I chronicle real-world cases of code with unintended
+      <em>Θ(n²)</em> complexity with harmful consequences.
+      </li>
+    </ul>
 
     <h2>Code</h2>
     <ul>
@@ -98,16 +117,24 @@
       the project at Stripe, helping to build it out and deploy it
       internally.
       </li>
+      <li><a href="https://github.com/nelhage/llama">Llama</a>, an
+      experiment in using Amazon's Lambda service for distributed
+      compilation. I've written about <a
+      href="https://blog.nelhage.com/post/building-llvm-in-90s/">using
+      it to compile LLVM in 90s</a>, as well as <a
+      href="https://blog.nelhage.com/post/distributed-builds-for-everyone/">the
+      broader vision of the project.</a>
+      </li>
       <li><a
       href="https://github.com/nelhage/taktician">Taktician</a>, an AI
       for the game of <a href="https://cheapass.com/tak/">Tak</a>,
       based on the game described in Patrick Rothfuss' <em>The Wise
-      Man's Fear</em>. As of this writing, it is the <a
-      href="https://www.reddit.com/r/Tak/wiki/unofficial_playtak_ranking">highest-ranked
+      Man's Fear</em>. For several years it was the <a
+      href="https://playtak.com/ratings.html">highest-ranked
       entity</a> on the <a href="https://playtak.com/">playtak.com</a>
       online site.
       </li>
-      <li><a href="https://crossme.app">Crossme.app</a>, a
+      <li><a href="https://crossme.app"><tt>crossme.app</tt></a>, a
       collaborative online crossword-puzzle solver.</li>
       <li><a href="https://github.com/nelhage/reptyr"><tt>reptyr</tt></a>, a
       little tool I wrote for moving a running program to a new terminal. You
@@ -139,20 +166,6 @@
     and <a href="https://github.com/nelhage/virtunoid">code</a> for
     that talk are now available online.
     </p>
-
-    <h2>Some other things I've hacked on</h2>
-
-    <ul>
-      <li><a href="http://barnowl.mit.edu/">BarnOwl</a>, a multi-protocol console Zephyr/IM client</li>
-      <li><a href="http://linerva.mit.edu">Linerva</a>, <a href="http://sipb.mit.edu">SIPB</a>'s public Linux dialup. </li>
-      <li><a href="http://debathena.mit.edu">Debathena</a>, the basis for Linerva, and now MIT's campus Linux distribution.</li>
-      <li><a href="http://conkeror.org/">Conkeror</a>, a xulrunner emacs-like web browser</li>
-      <li><a href="http://jifty.org/">Jifty</a>, an amazingly concise web framework written in perl.</li>
-      <li><a href="http://hiveminder.com/">Hiveminder</a>, a TODO list manager built using Jifty</li>
-      <li><a href="http://bitlbee.org/">Bitlbee</a>, an IRC&lt;-&gt;IM gateway</li>
-      <li><a href="http://growl.info/">Growl</a>, an OS X notification framework</li>
-      <li><a href="http://adiumx.com/">Adium</a>, a multiprotocol OS X IM client</li>
-    </ul>
 
     </div>
 
