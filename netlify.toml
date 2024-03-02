@@ -1,0 +1,17 @@
+[[redirects]]
+  from = "/files/*"
+  to = "https://storage.googleapis.com/archive.nelhage.com/files/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/paste/*"
+  to = "https://storage.googleapis.com/archive.nelhage.com/paste/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/talks/*"
+  to = "https://storage.googleapis.com/archive.nelhage.com/talks/:splat"
+  status = 200
+  force = false
